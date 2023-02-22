@@ -52,6 +52,33 @@ router.put("/create", async (req, res) => {
     res.status(500).json({ errorMessage: err.message });
   }
 });
+// Create new Bet
+router.put("/admin/create", async (req, res) => {
+  try {
+    const bet = await Bet.findOne({
+      userId: req.body.userId,
+      matchId: req.body.matchId,
+    });
+
+    // set new bet
+    if (!bet) {
+      await new Bet(req.body).save();
+      res.status(201).json({ status: "success" });
+    }
+  } catch (err) {
+    res.status(500).json({ errorMessage: err.message });
+  }
+});
+// Create new Bet
+router.post("/admin/create", async (req, res) => {
+  try {
+    console.log(req.body);
+    await Bet.insertMany(req.body.bets);
+    res.status(201).json({ status: "success" });
+  } catch (err) {
+    res.status(500).json({ errorMessage: err.message });
+  }
+});
 
 // Update Bet
 router.post("/update", async (req, res) => {
