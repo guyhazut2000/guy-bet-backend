@@ -16,7 +16,7 @@ const BetSchema = new mongoose.Schema(
     awayTeamScore: { type: String, required: true },
     score: { type: Number, default: 0, required: true },
     status: {
-      type: Enumerator,
+      type: String,
       enum: ["finished", "running"],
       default: "running",
     },
