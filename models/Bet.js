@@ -15,6 +15,11 @@ const BetSchema = new mongoose.Schema(
     homeTeamScore: { type: String, required: true },
     awayTeamScore: { type: String, required: true },
     score: { type: Number, default: 0, required: true },
+    status: {
+      type: Enumerator,
+      enum: ["finished", "running"],
+      default: "running",
+    },
   },
   { collection: "bets" },
   { timestamps: true }

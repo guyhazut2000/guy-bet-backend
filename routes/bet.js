@@ -117,6 +117,7 @@ router.post("/all", async (req, res) => {
     res.status(500).json({ errorMessage: err.message });
   }
 });
+
 // Get all Bets
 router.get("/all", async (req, res) => {
   try {
