@@ -5,6 +5,7 @@ const dotenv = require("dotenv");
 dotenv.config();
 const cors = require("cors");
 const userRoute = require("./routes/user");
+const bonusRoute = require("./routes/bonus");
 const betRoute = require("./routes/bet");
 const soccerMatchesRoute = require("./routes/soccerMatch");
 
@@ -22,6 +23,7 @@ app.use(express.json());
 app.use("/api/v1/users", userRoute);
 app.use("/api/v1/matches", soccerMatchesRoute);
 app.use("/api/v1/bets", betRoute);
+app.use("/api/v1/bonuses", bonusRoute);
 
 app.use("*", (req, res) => res.status(404).json({ error: "not found" }));
 
