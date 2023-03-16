@@ -1,14 +1,17 @@
+// middlewares
 const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 dotenv.config();
 const cors = require("cors");
+const { logger, logEvents } = require("./middlewares/logger");
+// routes
 const userRoute = require("./routes/user");
-const bonusRoute = require("./routes/bonus");
-const betRoute = require("./routes/bet");
-const soccerMatchesRoute = require("./routes/soccerMatch");
+const GameRoute = require("./routes/game");
+const SoccerBetRoute = require("./routes/soccerBet");
 
+// connect to mongo DB
 mongoose.set("strictQuery", true);
 mongoose
   .connect(process.env.MONGO_URL)
@@ -17,17 +20,22 @@ mongoose
     console.log(err);
   });
 
+// middlewares
+app.use(logger);
 app.use(cors());
 app.use(express.json());
 
+// routes
 app.use("/api/v1/users", userRoute);
-app.use("/api/v1/matches", soccerMatchesRoute);
-app.use("/api/v1/bets", betRoute);
-app.use("/api/v1/bonuses", bonusRoute);
+app.use("/api/v1/games", GameRoute);
+app.use("/api/v1/bets", SoccerBetRoute);
 
-app.use("*", (req, res) => res.status(404).json({ error: "not found" }));
+// wildcard route
+app.use("*", (req, res) => res.status(404).json({ error: "Page not found" }));
 
-//start server
-app.listen(process.env.PORT || process.env.MONGO_PORT, () => {
-  console.log("Backend server is running!");
+const PORT = process.env.PORT;
+
+// start listening for requests
+app.listen(PORT, () => {
+  console.log(`Backend server is running on port - ${PORT}`);
 });
